@@ -10,6 +10,7 @@ import java.util.UUID;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @OneToMany(mappedBy = "category_id_")
     private UUID id;
     private String name;
     public Category(@JsonProperty("id") UUID id,
