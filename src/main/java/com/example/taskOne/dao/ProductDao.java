@@ -17,5 +17,7 @@ public interface ProductDao {
 
     int deleteProduct(UUID id);
     int deleteProductByCategoryId(UUID id);
+    List<Product> getProductsByCategoryId(UUID categoryId);
+    UUID getCategoryByProductId(UUID productId);
 
 }

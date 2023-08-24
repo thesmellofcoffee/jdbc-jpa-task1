@@ -3,6 +3,7 @@ package com.example.taskOne.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -10,7 +11,6 @@ import java.util.UUID;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @OneToMany(mappedBy = "category_id_")
     private UUID id;
     private String name;
     public Category(@JsonProperty("id") UUID id,
@@ -18,7 +18,11 @@ public class Category {
         this.id = id;
         this.name = name;
     }
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Product> products;
 
+    public Category() {
+    }
     public String getName() {
         return name;
     }

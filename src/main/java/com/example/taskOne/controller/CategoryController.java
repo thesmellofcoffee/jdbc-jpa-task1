@@ -40,7 +40,7 @@ public class CategoryController {
     }
     @DeleteMapping("/{id}")
     public int deleteCategory(@PathVariable UUID id){
-        productService.deleteProductByCategoryId(id);
+        //productService.deleteProductByCategoryId(id);
         return categoryService.delete(id);
     }
 }

@@ -11,9 +11,18 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @ManyToOne
+    @JoinColumn(name="category_id_second", nullable=false)
     private UUID id;
     private String name;
     private UUID category_id;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id", nullable = false)
+    private Category category;
+
+    public Product() {
+    }
     public Product(@JsonProperty("id") UUID id,
                     @JsonProperty("name") String name,
                    @JsonProperty("category_id") UUID category_id){

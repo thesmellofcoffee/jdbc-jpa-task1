@@ -41,4 +41,14 @@ public class ProductController {
         return productService.deleteProduct(id);
     }
 
+    @GetMapping("/getProductsByCategoryId/{id}")
+    public List<Product> getProductsByCategoryId(@PathVariable UUID categoryId){
+        return productService.getProductsByCategoryId(categoryId);
+    }
+
+    @GetMapping("/getCategoryByProductId/{id}")
+    public UUID getCategoryByProductId(@PathVariable UUID productId){
+        return productService.getCategoryByProductId(productId);
+    }
+
 }

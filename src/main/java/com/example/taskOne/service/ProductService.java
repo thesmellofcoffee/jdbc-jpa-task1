@@ -34,4 +34,10 @@ public class ProductService {
     public int deleteProductByCategoryId(UUID id){
         return productDao.deleteProductByCategoryId(id);
     }
+    public List<Product> getProductsByCategoryId(UUID categoryId){
+        return productDao.getProductsByCategoryId(categoryId);
+    }
+    public UUID getCategoryByProductId(UUID productId){
+        return productDao.getCategoryByProductId(productId);
+    }
 }

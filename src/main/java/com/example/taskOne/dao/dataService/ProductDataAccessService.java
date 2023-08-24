@@ -56,4 +56,22 @@ public class ProductDataAccessService implements ProductDao {
         return jdbcTemplate.update(sql, id);
     }
 
+
+    @Override
+    public List<Product> getProductsByCategoryId(UUID categoryId) {
+        String sql = "SELECT * FROM product WHERE category_id = ?";
+        return jdbcTemplate.query(sql, new Object[]{categoryId}, (resultSet, rowNum) -> {
+            UUID productId = UUID.fromString(resultSet.getString("id"));
+            String productName = resultSet.getString("name");
+            // Diğer sütunları da burada çekebilirsiniz
+            return new Product(productId, productName, categoryId);
+        });
+    }
+
+    @Override
+    public UUID getCategoryByProductId(UUID productId) {
+        String sql = "SELECT category_id FROM product WHERE id = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{productId}, UUID.class);
+    }
+
 }
