@@ -63,13 +63,21 @@ public class ProductDataAccessService implements ProductDao {
 
     @Override
     public List<Product> getProductsByCategoryId(int categoryId) {
-        String sql = "SELECT * FROM product WHERE category_id = ?";
+        String sql = "SELECT product.id, product.name, product.category_id, category.name AS category_name " +
+                "FROM product " +
+                "JOIN category ON product.category_id = category.id " +
+                "WHERE product.category_id = ?";
+
         return jdbcTemplate.query(sql, new Object[]{categoryId}, (resultSet, rowNum) -> {
-            int productId = Integer.parseInt(resultSet.getString("id"));
+            int productId = resultSet.getInt("id");
             String productName = resultSet.getString("name");
-            return new Product(productId, productName);
+            int categoryId1 = resultSet.getInt("category_id");
+            String categoryName = resultSet.getString("category_name");
+            Category category = new Category(categoryId1, categoryName);
+            return new Product(productId, productName, category);
         });
     }
+
 
     @Override
     public int getCategoryByProductId(int productId) {
