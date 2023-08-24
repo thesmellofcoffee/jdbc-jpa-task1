@@ -27,10 +27,10 @@ public class CategoryService {
         return categoryDao.selectAllCategory();
     }
 
-    public int updateCategory(UUID id, String newName){
+    public int updateCategory(int id, String newName){
         return categoryDao.updateCategory(id, newName);
     }
-    public int delete(UUID id){
+    public int delete(int id){
         return categoryDao.delete(id);
     }
 }

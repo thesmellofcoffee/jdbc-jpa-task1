@@ -11,18 +11,23 @@ import java.util.UUID;
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private UUID id;
+    @Column(name = "id", columnDefinition = "bigserial")
+    private int id;
+    @JsonProperty("name")
     private String name;
-    public Category(@JsonProperty("id") UUID id,
-                  @JsonProperty("name") String name){
-        this.id = id;
-        this.name = name;
-    }
+
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Product> products;
 
     public Category() {
     }
+
+
+    public Category(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public String getName() {
         return name;
     }
@@ -31,11 +36,11 @@ public class Category {
         this.name = name;
     }
 
-    public UUID getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

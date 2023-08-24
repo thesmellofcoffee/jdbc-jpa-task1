@@ -2,14 +2,11 @@ package com.example.taskOne.controller;
 
 import com.example.taskOne.model.Product;
 import com.example.taskOne.service.ProductService;
-import com.example.taskOne.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @RequestMapping("/product")
 @RestController
@@ -22,33 +19,36 @@ public class ProductController {
     }
 
     @PostMapping
-    public void addProduct(@NonNull @RequestBody Product product){
+    public void addProduct(@NonNull @RequestBody Product product) {
         productService.addProduct(product);
     }
+
     @GetMapping
-    public List<Product> getAllProduct(){
+    public List<Product> getAllProduct() {
         return productService.getAllProduct();
     }
 
     @PutMapping("/{id}")
-    public int updateProduct(@PathVariable UUID id, @RequestBody Map<String, String> requestBody, Product product){
+    public int updateProduct(
+            @PathVariable int id,
+            @RequestBody Map<String, String> requestBody
+    ) {
         String newName = requestBody.get("name");
-        return productService.updateProduct(id, newName, product);
+        return productService.updateProduct(id, newName);
     }
 
     @DeleteMapping("/{id}")
-    public int deleteProduct(@PathVariable UUID id){
+    public int deleteProduct(@PathVariable int id) {
         return productService.deleteProduct(id);
     }
 
-    @GetMapping("/getProductsByCategoryId/{id}")
-    public List<Product> getProductsByCategoryId(@PathVariable UUID categoryId){
+    @GetMapping("/getProductsByCategoryId/{categoryId}")
+    public List<Product> getProductsByCategoryId(@PathVariable int categoryId) {
         return productService.getProductsByCategoryId(categoryId);
     }
 
-    @GetMapping("/getCategoryByProductId/{id}")
-    public UUID getCategoryByProductId(@PathVariable UUID productId){
+    @GetMapping("/getCategoryByProductId/{productId}")
+    public int getCategoryByProductId(@PathVariable int productId) {
         return productService.getCategoryByProductId(productId);
     }
-
 }

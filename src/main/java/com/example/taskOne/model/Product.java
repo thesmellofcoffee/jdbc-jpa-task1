@@ -11,31 +11,33 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ManyToOne
-    @JoinColumn(name="category_id_second", nullable=false)
-    private UUID id;
+    private int id;
+    @JsonProperty("name")
     private String name;
-    private UUID category_id;
-
     @ManyToOne
     @JoinColumn(name = "category_id", nullable = false)
+    @JsonProperty("category")
     private Category category;
 
     public Product() {
     }
-    public Product(@JsonProperty("id") UUID id,
-                    @JsonProperty("name") String name,
-                   @JsonProperty("category_id") UUID category_id){
+
+    public Product(int id, String name, Category category) {
         this.id = id;
         this.name = name;
-        this.category_id = category_id;
+        this.category = category;
     }
 
-    public UUID getId() {
+    public Product(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public int getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -47,13 +49,11 @@ public class Product {
         this.name = name;
     }
 
-    public UUID getCategory_id() {
-        return category_id;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setCategory_id(UUID category_id) {
-        this.category_id = category_id;
+    public void setCategory(Category category) {
+        this.category = category;
     }
-
-
 }

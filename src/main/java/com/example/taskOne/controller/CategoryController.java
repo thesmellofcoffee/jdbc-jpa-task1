@@ -34,12 +34,12 @@ public class CategoryController {
     }
 
     @PutMapping("/{id}")
-    public int updateCategory(@PathVariable UUID id, @RequestBody Map<String, String> requestBody) {
+    public int updateCategory(@PathVariable int id, @RequestBody Map<String, String> requestBody) {
         String newName = requestBody.get("name");
         return categoryService.updateCategory(id, newName);
     }
     @DeleteMapping("/{id}")
-    public int deleteCategory(@PathVariable UUID id){
+    public int deleteCategory(@PathVariable int id){
         //productService.deleteProductByCategoryId(id);
         return categoryService.delete(id);
     }

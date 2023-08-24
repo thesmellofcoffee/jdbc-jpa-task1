@@ -20,58 +20,61 @@ public class ProductDataAccessService implements ProductDao {
     }
 
     @Override
-    public int insertProduct(UUID id, Product product) {
-        final String sql = "INSERT INTO product (id, name, category_id) VALUES (?, ?, ?)";
-        return jdbcTemplate.update(sql, id, product.getName(), product.getCategory_id());
-    }
+    public int insertProduct(Product product) {
+        int lastInsertedId = 0;
 
+        lastInsertedId = getLastInsertedProductId();
+
+        int newId = lastInsertedId + 1;
+        final String sql = "INSERT INTO product (id, name, category_id) VALUES (?, ?, ?)";
+        return jdbcTemplate.update(sql, newId, product.getName(), product.getCategory().getId());
+    }
+    public int getLastInsertedProductId() {
+        String query = "SELECT COALESCE(MAX(id), 0) FROM product";
+        return jdbcTemplate.queryForObject(query, Integer.class);
+    }
     @Override
     public List<Product> selectAllProduct() {
-        final String sql = "SELECT id, name, category_id FROM product"; // Include category_id in the SQL query
+        final String sql = "SELECT p.id, p.name, c.id AS category_id, c.name AS category_name FROM product p INNER JOIN category c ON p.category_id = c.id";
         List<Product> products = jdbcTemplate.query(sql, (resultSet, i) -> {
-            UUID id = UUID.fromString(resultSet.getString("id"));
+            int id = resultSet.getInt("id");
             String name = resultSet.getString("name");
-            UUID category_id = UUID.fromString(resultSet.getString("category_id")); // Retrieve category_id
-            return new Product(id, name, category_id); // Use the correct constructor
+            int categoryId = resultSet.getInt("category_id");
+            String categoryName = resultSet.getString("category_name");
+            Category category = new Category(categoryId, categoryName);
+            return new Product(id, name, category);
         });
         return products;
     }
 
+
+
     @Override
-    public int updateProduct(UUID id, String newName, Product product){
-        product = new Product(id, newName, product.getCategory_id());
-        String sql = "UPDATE product SET name = ? WHERE id = ? ";
+    public int updateProduct(int id, String newName) {
+        String sql = "UPDATE product SET name = ? WHERE id = ?";
         return jdbcTemplate.update(sql, newName, id);
     }
 
     @Override
-    public int deleteProduct(UUID id){
+    public int deleteProduct(int id) {
         String sql = "DELETE FROM product WHERE id = ?";
         return jdbcTemplate.update(sql, id);
     }
 
     @Override
-    public int deleteProductByCategoryId(UUID id){
-        String sql = "DELETE FROM product WHERE category_id = ?";
-        return jdbcTemplate.update(sql, id);
-    }
-
-
-    @Override
-    public List<Product> getProductsByCategoryId(UUID categoryId) {
+    public List<Product> getProductsByCategoryId(int categoryId) {
         String sql = "SELECT * FROM product WHERE category_id = ?";
         return jdbcTemplate.query(sql, new Object[]{categoryId}, (resultSet, rowNum) -> {
-            UUID productId = UUID.fromString(resultSet.getString("id"));
+            int productId = Integer.parseInt(resultSet.getString("id"));
             String productName = resultSet.getString("name");
-            // Diğer sütunları da burada çekebilirsiniz
-            return new Product(productId, productName, categoryId);
+            return new Product(productId, productName);
         });
     }
 
     @Override
-    public UUID getCategoryByProductId(UUID productId) {
+    public int getCategoryByProductId(int productId) {
         String sql = "SELECT category_id FROM product WHERE id = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{productId}, UUID.class);
+        return jdbcTemplate.queryForObject(sql, new Object[]{productId}, int.class);
     }
 
 }

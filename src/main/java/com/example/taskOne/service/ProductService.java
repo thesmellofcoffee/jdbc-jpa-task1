@@ -25,19 +25,16 @@ public class ProductService {
     public List<Product> getAllProduct(){
         return productDao.selectAllProduct();
     }
-    public int updateProduct(UUID id, String newName, Product product){
-        return productDao.updateProduct(id, newName, product);
+    public int updateProduct(int id, String newName){
+        return productDao.updateProduct(id, newName);
     }
-    public int deleteProduct(UUID id){
+    public int deleteProduct(int id){
         return productDao.deleteProduct(id);
     }
-    public int deleteProductByCategoryId(UUID id){
-        return productDao.deleteProductByCategoryId(id);
-    }
-    public List<Product> getProductsByCategoryId(UUID categoryId){
+    public List<Product> getProductsByCategoryId(int categoryId){
         return productDao.getProductsByCategoryId(categoryId);
     }
-    public UUID getCategoryByProductId(UUID productId){
+    public int getCategoryByProductId(int productId){
         return productDao.getCategoryByProductId(productId);
     }
 }
