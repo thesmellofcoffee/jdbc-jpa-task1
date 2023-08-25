@@ -1,5 +1,6 @@
 package com.example.taskOne.controller;
 
+import com.example.taskOne.exception.ProductNotfoundException;
 import com.example.taskOne.model.Product;
 import com.example.taskOne.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,7 @@ public class ProductController {
 
     @DeleteMapping("/{id}")
     public int deleteProduct(@PathVariable int id) {
+
         return productService.deleteProduct(id);
     }
 

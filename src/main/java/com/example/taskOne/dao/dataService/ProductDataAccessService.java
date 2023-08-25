@@ -1,6 +1,7 @@
 package com.example.taskOne.dao.dataService;
 
 import com.example.taskOne.dao.ProductDao;
+import com.example.taskOne.exception.ProductNotfoundException;
 import com.example.taskOne.model.Category;
 import com.example.taskOne.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,13 @@ public class ProductDataAccessService implements ProductDao {
     @Override
     public int deleteProduct(int id) {
         String sql = "DELETE FROM product WHERE id = ?";
+
+        int rowsAffected = jdbcTemplate.update(sql, id);
+
+        if (rowsAffected == 0) {
+            throw new ProductNotfoundException("messageeeeafdsd");
+        }
+
         return jdbcTemplate.update(sql, id);
     }
 
