@@ -1,8 +1,8 @@
 package com.example.taskOne.exception;
 
-import java.io.Serial;
+public class EmptyIdException extends RuntimeException{
 
-public class ProductNotfoundException extends RuntimeException{
+
     private String message;
 
     @Override
@@ -13,8 +13,4 @@ public class ProductNotfoundException extends RuntimeException{
     public void setMessage(String message) {
         this.message = message;
     }
-
-    @Serial
-    private static final long serialVersionUID = 1L;
 }
-

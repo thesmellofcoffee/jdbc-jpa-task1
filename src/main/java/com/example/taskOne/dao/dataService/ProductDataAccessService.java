@@ -63,7 +63,7 @@ public class ProductDataAccessService implements ProductDao {
         int rowsAffected = jdbcTemplate.update(sql, id);
 
         if (rowsAffected == 0) {
-            throw new ProductNotfoundException("messageeeeafdsd");
+            throw new ProductNotfoundException();
         }
 
         return jdbcTemplate.update(sql, id);
