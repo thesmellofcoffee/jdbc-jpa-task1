@@ -1,6 +1,7 @@
 package com.example.taskOne.dao;
 
 import com.example.taskOne.dao.dataService.ProductDataAccessService;
+import com.example.taskOne.dto.ProductDTO;
 import com.example.taskOne.model.Product;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface ProductDao {
     int deleteProduct(int id);
     List<Product> getProductsByCategoryId(int categoryId);
     int getCategoryByProductId(int productId);
+
+    ProductDTO getProductById(int id);
 }

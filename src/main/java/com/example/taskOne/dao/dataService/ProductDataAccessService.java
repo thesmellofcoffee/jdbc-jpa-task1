@@ -1,11 +1,14 @@
 package com.example.taskOne.dao.dataService;
 
+import com.example.taskOne.converter.ProductConverter;
 import com.example.taskOne.dao.ProductDao;
+import com.example.taskOne.dto.ProductDTO;
 import com.example.taskOne.exception.EmptyIdException;
 import com.example.taskOne.exception.ProductNotfoundException;
 import com.example.taskOne.model.Category;
 import com.example.taskOne.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -109,5 +112,27 @@ public class ProductDataAccessService implements ProductDao {
         String sql = "SELECT category_id FROM product WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new Object[]{productId}, int.class);
     }
+
+
+
+
+    @Override
+    public ProductDTO getProductById(int id) {
+        String sql = "SELECT product.name " +
+                "FROM product " +
+                "WHERE product.id = ?";
+
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{id}, (resultSet, i) -> {
+                String productName = resultSet.getString("name");
+                Product product = new Product(productName);
+                return ProductConverter.toDTO(product);
+            });
+        } catch (EmptyResultDataAccessException e) {
+            // Handle if no product is found with the given id
+            return null;  // or throw an exception as needed
+        }
+    }
+
 
 }
