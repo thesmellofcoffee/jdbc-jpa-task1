@@ -1,6 +1,6 @@
 package com.example.taskOne.service;
 
-import com.example.taskOne.converter.ProductConverter;
+import com.example.taskOne.converter.ProductToProductDTOConverter;
 import com.example.taskOne.dao.ProductDao;
 import com.example.taskOne.dto.ProductDTO;
 import com.example.taskOne.model.Product;
@@ -20,9 +20,13 @@ public class ProductService {
         this.productDao = productDao;
     }
 
-    public int addProduct(Product product){
-        ProductDTO productDTO = ProductConverter.toDTO(product);
+    @Autowired
+    private ProductToProductDTOConverter converterForService;
 
+    public ProductDTO getProductDTO(Product product) {
+        return converterForService.convert(product);
+    }
+    public int addProduct(Product product){
         return productDao.insertProduct(product);
     }
 
@@ -40,5 +44,9 @@ public class ProductService {
     }
     public int getCategoryByProductId(int productId){
         return productDao.getCategoryByProductId(productId);
+    }
+
+    public Product getProductById(int id){
+        return productDao.getProductById(id);
     }
 }

@@ -1,5 +1,6 @@
 package com.example.taskOne.controller;
 
+import com.example.taskOne.dto.ProductDTO;
 import com.example.taskOne.exception.ProductNotfoundException;
 import com.example.taskOne.model.Product;
 import com.example.taskOne.service.ProductService;
@@ -52,5 +53,15 @@ public class ProductController {
     @GetMapping("/getCategoryByProductId/{productId}")
     public int getCategoryByProductId(@PathVariable int productId) {
         return productService.getCategoryByProductId(productId);
+    }
+
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable int id){
+        return productService.getProductById(id);
+    }
+
+    @GetMapping("/dto/{id}")
+    public ProductDTO getProductDTO(@PathVariable int id){
+        return productService.getProductDTO(productService.getProductById(id));
     }
 }

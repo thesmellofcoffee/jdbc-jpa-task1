@@ -2,19 +2,23 @@ package com.example.taskOne.dto;
 
 public class ProductDTO {
 
-    private String productName;
 
-    public ProductDTO(String productName) {
-        this.productName = productName;
+    private String name;
+    public ProductDTO() {
     }
 
 
-    public String getProductName() {
-        return productName;
+    public String getName() {
+        return name;
     }
 
-    public void setProductName(String productName) {
-        this.productName = productName;
+    public void setName(String name) {
+        this.name = name;
     }
+
+
+
+
+
 }
 
