@@ -22,6 +22,8 @@ public class ExceptionController {
         ExceptionResponse exceptionResponse2 = new ExceptionResponse(exception2.getMessage(), HttpStatus.BAD_REQUEST);
         return new ResponseEntity<>(exceptionResponse2, HttpStatus.BAD_REQUEST);
     }
+
+    
 }
 
 

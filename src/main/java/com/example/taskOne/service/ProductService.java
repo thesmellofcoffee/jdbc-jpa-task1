@@ -1,6 +1,8 @@
 package com.example.taskOne.service;
 
+import com.example.taskOne.converter.ProductConverter;
 import com.example.taskOne.dao.ProductDao;
+import com.example.taskOne.dto.ProductDTO;
 import com.example.taskOne.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +21,8 @@ public class ProductService {
     }
 
     public int addProduct(Product product){
+        ProductDTO productDTO = ProductConverter.toDTO(product);
+
         return productDao.insertProduct(product);
     }
 

@@ -1,6 +1,7 @@
 package com.example.taskOne.dao.dataService;
 
 import com.example.taskOne.dao.ProductDao;
+import com.example.taskOne.exception.EmptyIdException;
 import com.example.taskOne.exception.ProductNotfoundException;
 import com.example.taskOne.model.Category;
 import com.example.taskOne.model.Product;
@@ -28,7 +29,18 @@ public class ProductDataAccessService implements ProductDao {
 
         int newId = lastInsertedId + 1;
         final String sql = "INSERT INTO product (id, name, category_id) VALUES (?, ?, ?)";
-        return jdbcTemplate.update(sql, newId, product.getName(), product.getCategory().getId());
+
+        try{
+            if (product.getName() == null){
+                throw new EmptyIdException();
+            }else{
+                return jdbcTemplate.update(sql, newId, product.getName(), product.getCategory().getId());
+            }
+
+        }catch(Exception e){
+            throw new EmptyIdException();
+        }
+
     }
     public int getLastInsertedProductId() {
         String query = "SELECT COALESCE(MAX(id), 0) FROM product";
@@ -60,13 +72,18 @@ public class ProductDataAccessService implements ProductDao {
     public int deleteProduct(int id) {
         String sql = "DELETE FROM product WHERE id = ?";
 
-        int rowsAffected = jdbcTemplate.update(sql, id);
+        try {
+            int rowsAffected = jdbcTemplate.update(sql, id);
 
-        if (rowsAffected == 0) {
+            if (rowsAffected == 0) {
+                throw new ProductNotfoundException();
+            }
+
+
+            return jdbcTemplate.update(sql, id);
+        }catch (Exception e){
             throw new ProductNotfoundException();
         }
-
-        return jdbcTemplate.update(sql, id);
     }
 
     @Override

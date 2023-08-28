@@ -11,6 +11,10 @@ public class ExceptionResponse {
         this.status = status;
     }
 
+    public String getMessage() {
+        return message;
+    }
+
     public HttpStatus getStatus() {
         return status;
     }
