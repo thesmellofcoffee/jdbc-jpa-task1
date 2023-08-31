@@ -33,4 +33,8 @@ public class CategoryService {
     public int delete(int id){
         return categoryDao.delete(id);
     }
+
+    public String getSubCategoryById(int id){
+        return categoryDao.getSubCategoryById(id);
+    }
 }

@@ -5,12 +5,14 @@ import com.example.taskOne.model.Category;
 import java.util.List;
 import java.util.UUID;
 
-public interface CategoryDao {
-    int insertCategory (Category category);
+public abstract class CategoryDao {
+    public abstract int insertCategory (Category category);
 
-    List<Category> selectAllCategory();
+    public abstract List<Category> selectAllCategory();
 
-    int updateCategory(int id, String newName);
+    public abstract int updateCategory(int id, String newName);
 
-    int delete(int id);
+    public abstract int delete(int id);
+
+    public abstract String getSubCategoryById(int id);
 }

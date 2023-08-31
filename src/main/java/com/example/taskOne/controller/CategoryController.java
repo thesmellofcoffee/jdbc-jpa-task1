@@ -43,4 +43,9 @@ public class CategoryController {
         //productService.deleteProductByCategoryId(id);
         return categoryService.delete(id);
     }
+
+    @GetMapping("/subCategory/{id}")
+    public String getSubCategoryById(@PathVariable int id){
+        return categoryService.getSubCategoryById(id);
+    }
 }

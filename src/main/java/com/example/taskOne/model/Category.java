@@ -1,8 +1,10 @@
 package com.example.taskOne.model;
 
+import com.example.taskOne.enums.SubCategory;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,8 +18,38 @@ public class Category {
     @JsonProperty("name")
     private String name;
 
+    @JsonProperty("subCategory")
+    @Column(name = "subcategory")
+    @Enumerated(EnumType.STRING)
+    private SubCategory subCategory;
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
     private List<Product> products;
+
+
+    public Category(int id, String name, SubCategory subCategory) {
+        this.id = id;
+        this.name = name;
+        this.subCategory = subCategory;
+    }
+
+
+
+    public String getSubCategory() {
+        return subCategory.getValue();
+    }
+
+    public void setSubCategory(SubCategory subCategory) {
+        this.subCategory = subCategory;
+    }
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
 
     public Category() {
     }
@@ -28,6 +60,8 @@ public class Category {
         this.name = name;
     }
 
+
+
     public String getName() {
         return name;
     }
@@ -35,6 +69,7 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
+
 
     public int getId() {
         return id;
