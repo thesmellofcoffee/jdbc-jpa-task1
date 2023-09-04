@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Import;
 @SpringBootApplication
 public class TaskOneApplication {
 
+
+	//Static Key
 	public static void main(String[] args) {
 		SpringApplication.run(TaskOneApplication.class, args);
 	}

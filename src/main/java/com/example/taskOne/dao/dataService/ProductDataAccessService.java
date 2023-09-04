@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository("postgresTwo")
@@ -131,9 +132,13 @@ public class ProductDataAccessService implements ProductDao {
                 return new Product(productId, productName, category);
             });
         } catch (EmptyResultDataAccessException e) {
-            // Handle if no product is found with the given id
-            return null;  // or throw an exception as needed
+            throw new ProductNotfoundException();
         }
+    }
+
+    @Override
+    public Optional<Product> findByItemSku(long itemSku) {
+        return Optional.empty();
     }
 }
 
